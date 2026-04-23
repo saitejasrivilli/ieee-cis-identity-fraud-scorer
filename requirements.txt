@@ -1,0 +1,11 @@
+kaggle
+lightgbm
+scikit-learn
+pandas
+numpy
+matplotlib
+seaborn
+fastapi
+uvicorn
+requests
+pydantic

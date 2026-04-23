@@ -1,0 +1,5 @@
+*.pkl
+*.csv
+ieee-fraud/
+__pycache__/
+.ipynb_checkpoints/
