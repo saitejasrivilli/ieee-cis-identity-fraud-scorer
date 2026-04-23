@@ -164,6 +164,16 @@ weighted avg       0.99      0.99      0.99    118108
 
 ---
 
+## Plots
+
+![Feature Importance](plots/feature_importance.png)
+
+![Precision-Recall Curve](plots/precision_recall_curve.png)
+
+![PSI Score Drift](plots/psi_score_drift.png)
+
+---
+
 ## Architecture
 
 ```
