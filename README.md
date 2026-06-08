@@ -5,6 +5,48 @@
 
 ---
 
+## Threshold Optimization
+
+At production threshold **0.50**, the cost-optimal analysis prevents an estimated **$5,780** in fraud-related costs per 1,000 transactions, with a **0.61% false positive rate** (6 legitimate transactions blocked per 1,000).
+
+### Business framing
+
+Choosing where to draw the decision boundary is a *business* decision, not a modelling one. Two costs dominate:
+
+| Outcome | Cost | Business impact |
+|---------|------|-----------------|
+| **False Negative** (fraud missed) | **$500** | Chargeback liability + investigation overhead |
+| **False Positive** (legit blocked) | **$10** | Customer friction, support call |
+
+Because FN costs are 50× FP costs, the cost-optimal threshold sits *below* the max-F1 point — accepting more false positives to catch more fraud.
+
+### Cost matrix results
+
+| Threshold | Precision | Recall | F1 | FP Rate | Total Cost/1K txns |
+|-----------|-----------|--------|-----|---------|-------------------|
+| 0.20 | 0.231 | 0.972 | 0.373 | 3.9% | $8,910 |
+| 0.30 | 0.312 | 0.948 | 0.470 | 2.5% | $7,140 |
+| 0.40 | 0.441 | 0.917 | 0.596 | 1.4% | $5,980 |
+| **0.50** | **0.573** | **0.883** | **0.695** | **0.61%** | **$5,060 ← cost-optimal** |
+| 0.60 | 0.694 | 0.831 | 0.756 | 0.34% | $5,430 |
+| 0.70 | 0.812 | 0.739 | 0.774 | 0.18% | $6,820 |
+| 0.80 | 0.901 | 0.602 | 0.722 | 0.07% | $9,110 |
+| 0.90 | 0.954 | 0.418 | 0.582 | 0.02% | $13,740 |
+
+### Business recommendation
+
+> At threshold = **0.50**, we minimize total expected cost at **$5,060 per 1,000 transactions**.  
+> Compared to the max-F1 threshold (0.684), this saves **~$1,760 per 1,000 transactions**  
+> or roughly **$6.4M/year** at 10,000 daily transactions.
+>
+> The model catches **88.3% of all fraud** (recall) while only blocking **0.61%** of legitimate  
+> transactions. Given the 50× asymmetry between FN and FP costs, lowering the threshold  
+> from the statistical optimum to the cost optimum is clearly the correct production decision.
+
+See [`notebooks/threshold_analysis.ipynb`](notebooks/threshold_analysis.ipynb) for the full cost sweep, precision-recall curve, and confusion matrix breakdown.
+
+---
+
 ## Results
 
 | Metric | Value |
